@@ -1,6 +1,6 @@
 # Data and models — DVC tracked
-data/
-models/
+/data/
+/models/
 mlruns/
 *.pkl
 *.parquet
