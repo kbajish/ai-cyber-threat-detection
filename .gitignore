@@ -1,0 +1,28 @@
+# Data and models — DVC tracked
+data/
+models/
+mlruns/
+*.pkl
+*.parquet
+*.csv
+
+# Secrets
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+.venv/
+dist/
+.pytest_cache/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# DVC
+/tmp
