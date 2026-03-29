@@ -15,13 +15,13 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.10"
 
       - name: Install dependencies
         run: pip install -r requirements.dev.txt
 
-      - name: Run tests
-        run: pytest tests/ -v
+      - name: Run tests (skip model tests — models not in CI)
+        run: pytest tests/ -v -m "not requires_model" --ignore=tests/test_model.py
 
   docker-build:
     runs-on: ubuntu-latest
