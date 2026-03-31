@@ -7,7 +7,9 @@
 
 AI Cyber Threat Detection is an end-to-end machine learning system that classifies network traffic into benign and malicious categories using XGBoost and Random Forest models trained on the CICIDS2017 dataset. The system is designed to support faster and more interpretable security triage by combining classical machine learning, explainable AI, and LLM-based reasoning.
 
-Each prediction is enriched with SHAP-based feature attribution and mapped to MITRE ATT&CK tactics and techniques. A LangChain + Ollama LLM module generates SOC-style explanations grounded in model outputs, providing human-readable insights and mitigation context. The system includes DSGVO-aligned audit logging, a production-ready API, and an interactive dashboard.
+Each prediction is enriched with SHAP-based feature attribution and mapped to MITRE ATT&CK tactics and techniques. A LangChain + Ollama LLM module generates SOC-style explanations grounded in model outputs, providing human-readable insights and mitigation context. The system includes GDPR-aligned audit logging and an interactive dashboard.
+
+This project demonstrates the architecture and MLOps patterns of an AI-driven threat detection system. It is intended as a reference implementation and learning resource, not a deployment-ready system.
 
 ---
 
@@ -17,7 +19,7 @@ Each prediction is enriched with SHAP-based feature attribution and mapped to MI
 - 📊 SHAP-based explainability (feature-level attribution per prediction)
 - 🛡 MITRE ATT&CK mapping (e.g., T1046, T1498, T1110)
 - 🤖 LLM-powered SOC explanations using LangChain + Ollama (local, no API key required)
-- 🔐 DSGVO-aligned audit logging with SHA-256 pseudonymised IPs
+- 🔐 GDPR-aligned audit logging with SHA-256 pseudonymised IPs
 - ⚡ FastAPI backend (`/predict`, `/audit`, `/health`)
 - 📈 Streamlit dashboard with live threat feed and visual analytics
 - 🔁 DVC for dataset versioning and reproducibility
@@ -55,7 +57,7 @@ src/audit/logger.py  (SQLite, pseudonymised IPs)
 
 Network flow records from CICIDS2017 are preprocessed into model-ready features and passed through trained classifiers to generate predictions and confidence scores. SHAP computes feature-level contributions for each prediction, while a rule-based mapper links detected attacks to MITRE ATT&CK techniques. These outputs are injected into a structured prompt used by a LangChain + Ollama LLM to generate SOC-style explanations grounded in model reasoning.
 
-The final output — including prediction, confidence, SHAP values, MITRE mapping, and LLM explanation — is returned via the FastAPI `/predict` endpoint, logged to a DSGVO-aligned audit database, and visualised in real time through the Streamlit dashboard using a replay simulator that streams real CICIDS2017 test rows at configurable speed.
+The final output — including prediction, confidence, SHAP values, MITRE mapping, and LLM explanation — is returned via the FastAPI `/predict` endpoint, logged to a GDPR-aligned audit database, and visualised in real time through the Streamlit dashboard using a replay simulator that streams real CICIDS2017 test rows at configurable speed.
 
 ---
 
@@ -67,7 +69,7 @@ The Streamlit dashboard provides:
 - 📊 SHAP waterfall chart for the latest detected threat
 - 🛡 MITRE ATT&CK technique and tactic badge per detection
 - 🧠 LLM-generated SOC analyst explanation
-- 📜 DSGVO audit log viewer (pseudonymised)
+- 📜 GDPR audit log viewer (pseudonymised)
 
 ---
 
@@ -126,7 +128,7 @@ ai-cyber-threat-detection/
 │   ├── threat_intel/
 │   │   └── mitre_mapper.py        # CICIDS2017 label → ATT&CK technique
 │   ├── audit/
-│   │   └── logger.py              # DSGVO audit trail (SQLite)
+│   │   └── logger.py              # GDPR audit trail (SQLite)
 │   ├── llm/
 │   │   └── explainer_chain.py     # LangChain + Ollama chain
 │   └── simulation/
@@ -208,13 +210,13 @@ python -m src.simulation.replay --delay 0.5
 
 ## 🔐 Data & Privacy
 
-- Source IP addresses are pseudonymised using SHA-256 hashing before storage — raw IPs are never persisted (DSGVO Art. 25 — privacy by design)
-- All inference decisions are logged with timestamp, model version, prediction, confidence, and contributing SHAP features to support accountability (DSGVO Art. 22)
+- Source IP addresses are pseudonymised using SHA-256 hashing before storage — raw IPs are never persisted (GDPR Art. 25 — privacy by design)
+- All inference decisions are logged with timestamp, model version, prediction, confidence, and contributing SHAP features to support accountability (GDPR Art. 22)
 - See `AI_ACT_COMPLIANCE.md` for EU AI Act risk classification and safeguard documentation
 
 ---
 
-## 📈 Future Improvements
+## 📈 Possible Extensions
 
 - Real-time streaming with Kafka (natural next step after replay simulator)
 - LSTM / Autoencoder for anomaly-based detection of zero-day threats
@@ -226,4 +228,4 @@ python -m src.simulation.replay --delay 0.5
 
 ## 👤 Author
 
-Experienced IT professional with a background in development, cybersecurity, and ERP systems, with expertise in Industrial AI. Focused on building production-ready AI systems with explainability, LLM integration, and MLOps best practices.
+Experienced IT professional with a background in development, cybersecurity, and ERP systems, with expertise in Industrial AI. Focused on building well-engineered AI systems with explainability, LLM integration, and MLOps practices.

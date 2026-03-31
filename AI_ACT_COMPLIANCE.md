@@ -1,12 +1,12 @@
-# EU AI Act & DSGVO Compliance Notes
+# EU AI Act & GDPR Compliance Notes
 
-## Risk classification
+## Risk Classification
 This system performs automated threat classification on network traffic.
 Under EU AI Act Annex III, AI systems used in critical infrastructure
 security may qualify as high-risk. This project implements the following
 safeguards accordingly.
 
-## DSGVO measures
+## GDPR Measures
 - Source IP addresses are pseudonymised using SHA-256 hashing before
   storage. Raw IPs are never persisted (Art. 25 — privacy by design).
 - All inference decisions are logged with timestamp, model version,
@@ -18,7 +18,7 @@ safeguards accordingly.
 - A human-readable narrative is generated via LLM for all threat
   detections above 0.7 confidence.
 
-## Model governance
+## Model Governance
 - Model version is recorded in every audit log entry.
 - Accuracy and false-negative rate are enforced via CI regression tests.
 - Experiment tracking via MLflow retains full training lineage.
